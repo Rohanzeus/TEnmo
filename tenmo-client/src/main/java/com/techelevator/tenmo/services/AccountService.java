@@ -21,7 +21,7 @@ public class AccountService {
     }
 
     public BigDecimal getBalance() {
-        BigDecimal balance = new BigDecimal(0);
+        BigDecimal balance = null;
         try{
             balance = restTemplate.exchange(BASE_URL + "balance/" + userCurrently.getUser().getId(), HttpMethod.GET, makeAuthEntity(), BigDecimal.class).getBody();
         }catch (RestClientException e) {
