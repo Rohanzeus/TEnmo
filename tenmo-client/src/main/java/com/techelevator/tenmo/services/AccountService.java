@@ -21,7 +21,7 @@ public class AccountService {
     }
 
     public BigDecimal getBalance() {
-        BigDecimal balance = null;
+        BigDecimal balance = new BigDecimal(0);
         try{
             balance = restTemplate.exchange(BASE_URL + "balance/" + userCurrently.getUser().getId(), HttpMethod.GET, makeAuthEntity(), BigDecimal.class).getBody();
         }catch (RestClientException e) {
@@ -29,10 +29,10 @@ public class AccountService {
         }return balance;
     }
 
-    private HttpEntity makeAuthEntity() {
+    private HttpEntity<Void> makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(userCurrently.getToken());
-        HttpEntity entity = new HttpEntity<>(headers);
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
         return entity;
     }
 }
