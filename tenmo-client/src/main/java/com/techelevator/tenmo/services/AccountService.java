@@ -13,17 +13,17 @@ public class AccountService {
 
     private String BASE_URL;
     private RestTemplate restTemplate = new RestTemplate();
-    private AuthenticatedUser userCurrently;
+    private AuthenticatedUser currentUser;
 
-    public AccountService(String url, AuthenticatedUser userCurrently) {
+    public AccountService(String url, AuthenticatedUser currentUser) {
         this.BASE_URL = url;
-        this.userCurrently = userCurrently;
+        this.currentUser = currentUser;
     }
 
     public BigDecimal getBalance() {
         BigDecimal balance = null;
         try{
-            balance = restTemplate.exchange(BASE_URL + "balance/" + userCurrently.getUser().getId(), HttpMethod.GET, makeAuthEntity(), BigDecimal.class).getBody();
+            balance = restTemplate.exchange(BASE_URL + "balance/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), BigDecimal.class).getBody();
         }catch (RestClientException e) {
             System.out.println("Balance is $" + balance);
         }return balance;
@@ -31,7 +31,7 @@ public class AccountService {
 
     private HttpEntity makeAuthEntity(){
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(userCurrently.getToken());
+        headers.setBearerAuth(currentUser.getToken());
         HttpEntity entity = new HttpEntity<>(headers);
         return entity;
     }
