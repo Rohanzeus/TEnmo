@@ -11,10 +11,10 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 
 @Component
-public class jdbcAccountDao implements AccountDao {
+public class JdbcAccountDao implements AccountDao {
     JdbcTemplate jdbcTemplate;
 
-    public jdbcAccountDao(DataSource dataSource) {
+    public JdbcAccountDao(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

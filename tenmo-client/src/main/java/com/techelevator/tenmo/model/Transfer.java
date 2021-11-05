@@ -2,12 +2,12 @@ package com.techelevator.tenmo.model;
 
 import java.math.BigDecimal;
 
-public class Transfers {
+public class Transfer {
     private int fromAccount;
     private int toAccount;
     private int transfer_Id;
-    private int Status_Id;
-    private int Type_Id;
+    private int status_Id;
+    private int type_Id;
     private BigDecimal amountToOrFrom;
     private String type;
     private String transfer;
@@ -39,19 +39,19 @@ public class Transfers {
     }
 
     public int getStatus_Id() {
-        return Status_Id;
+        return status_Id;
     }
 
     public void setStatus_Id(int status_Id) {
-        Status_Id = status_Id;
+        status_Id = status_Id;
     }
 
     public int getType_Id() {
-        return Type_Id;
+        return type_Id;
     }
 
     public void setType_Id(int type_Id) {
-        Type_Id = type_Id;
+        type_Id = type_Id;
     }
 
     public BigDecimal getAmountToOrFrom() {
