@@ -72,7 +72,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		// TODO Auto-generated method stub
 		AccountService accountService = new AccountService(API_BASE_URL, currentUser);
 		try {
-			accountService.getBalance();
+			System.out.println("Balance: $" + accountService.getBalance());
 		}catch (NullPointerException e){
 			System.out.println("No Balance");
 		}
