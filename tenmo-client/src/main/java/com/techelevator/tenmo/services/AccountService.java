@@ -31,13 +31,7 @@ public class AccountService {
 
     private HttpEntity<Void> makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();
-//<<<<<<< HEAD
         headers.setBearerAuth(currentUser.getToken());
-        HttpEntity entity = new HttpEntity<>(headers);
-//=======
-//        headers.setBearerAuth(currentUser.getToken());
-//        HttpEntity<Void> entity = new HttpEntity<>(headers);
-//>>>>>>> 340088db97c355f2e32b2a72f06fa18ba6b72236
-        return entity;
+        return new HttpEntity<>(headers);
     }
 }
