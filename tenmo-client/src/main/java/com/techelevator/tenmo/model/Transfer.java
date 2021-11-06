@@ -93,4 +93,5 @@ public class Transfer {
     public void setToUser(String toUser) {
         this.toUser = toUser;
     }
+
 }

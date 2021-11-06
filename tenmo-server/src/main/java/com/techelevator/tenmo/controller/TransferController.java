@@ -13,7 +13,7 @@ public class TransferController {
     private UserDao userDao;
 
 
-    @RequestMapping(path = "transfer/", method = RequestMethod.POST)
+    @RequestMapping(path = "transfers", method = RequestMethod.POST)
     public String makeTransfer(@RequestBody Transfer transfer) {
         String result = transferDao.sendTransfer(transfer.getFromAccount(), transfer.getToAccount(),transfer.getAmountToOrFrom());
         return result;
