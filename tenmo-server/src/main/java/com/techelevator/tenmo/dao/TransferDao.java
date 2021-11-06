@@ -5,5 +5,6 @@ import com.techelevator.tenmo.model.Transfer;
 import java.math.BigDecimal;
 
 public interface TransferDao {
-    public String sendTransfer(int fromUser, int toUser, BigDecimal amount);
+    String sendTransfer(int fromUser, int toUser, BigDecimal amount);
+
 }
