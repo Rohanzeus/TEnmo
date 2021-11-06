@@ -1,10 +1,12 @@
 package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.AuthenticationServiceException;
+import com.techelevator.tenmo.services.TransferService;
 import com.techelevator.view.ConsoleService;
 
 public class App {
@@ -24,8 +26,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_VIEW_BALANCE, MAIN_MENU_OPTION_SEND_BUCKS, MAIN_MENU_OPTION_VIEW_PAST_TRANSFERS, MAIN_MENU_OPTION_REQUEST_BUCKS, MAIN_MENU_OPTION_VIEW_PENDING_REQUESTS, MAIN_MENU_OPTION_LOGIN, MENU_OPTION_EXIT };
 	
     private AuthenticatedUser currentUser;
-    private ConsoleService console;
-    private AuthenticationService authenticationService;
+    private final ConsoleService console;
+    private final AuthenticationService authenticationService;
 
     public static void main(String[] args) {
     	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
@@ -48,7 +50,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void mainMenu() {
 		while(true) {
-			String choice = (String)console.getChoiceFromOptions(MAIN_MENU_OPTIONS);
+			String choice = (String) console.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			if(MAIN_MENU_OPTION_VIEW_BALANCE.equals(choice)) {
 				viewCurrentBalance();
 			} else if(MAIN_MENU_OPTION_VIEW_PAST_TRANSFERS.equals(choice)) {
@@ -71,11 +73,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
 		AccountService accountService = new AccountService(API_BASE_URL, currentUser);
-		try {
-			System.out.println("Balance: $" + accountService.getBalance());
-		}catch (NullPointerException e){
-			System.out.println("No Balance");
-		}
+		System.out.println("Balance: $" + accountService.getBalance());
 	}
 
 	private void viewTransferHistory() {
@@ -90,7 +88,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-		
+		TransferService transferService = new TransferService(API_BASE_URL, currentUser);
+		transferService.sendTEBucks();
 	}
 
 	private void requestBucks() {

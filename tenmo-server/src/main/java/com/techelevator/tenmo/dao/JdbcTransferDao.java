@@ -16,20 +16,26 @@ public class JdbcTransferDao implements TransferDao {
     }
 
     @Override
-    public String makeTransfer(Transfer transfer) {
-        String sql = "INSERT INTO transfers VALUES (?, ?, ?, ?, ?, ?);";
+    public String sendTransfer(int fromUser, int toUser, BigDecimal amount) {
 
-        int transferId = transfer.getTransfer_Id();
-        int typeId = transfer.getType_Id();
-        int statusId = transfer.getStatus_Id();
-        int accountFrom = transfer.getFromAccount();
-        int accountTo = transfer.getToAccount();
-        BigDecimal amount = transfer.getAmountToOrFrom();
-        jdbcTemplate.update(sql, transferId, typeId, statusId, accountFrom, accountTo, amount);
+        if (amount.compareTo(accountDao.getBalance(fromUser)) != 1) {
+            String sql = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount )" +
+                    "VALUES (2, 2, ?, ?, ?);";
 
-        accountDao.addBalance(accountTo, amount);
-        accountDao.subtractBalance(accountFrom, amount);
+//
+//        int transferId = transfer.getTransfer_Id();
+//        int typeId = transfer.getType_Id();
+//        int statusId = transfer.getStatus_Id();
+//        int accountFrom = transfer.getFromAccount();
+//        int accountTo = transfer.getToAccount();
+//        BigDecimal amount = transfer.getAmountToOrFrom();
+            jdbcTemplate.update(sql, fromUser, toUser, amount);
 
-        return transfer;
+            accountDao.addBalance(toUser, amount);
+            accountDao.subtractBalance(fromUser, amount);
+            return "Completed";
+        }
+
+        return "Failed";
     }
 }

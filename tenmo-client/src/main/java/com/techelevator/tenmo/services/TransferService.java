@@ -27,7 +27,7 @@ public class TransferService {
         transfer.setFromAccount(currentUser.getUser().getId());
         Scanner keyboard = new Scanner(System.in);
         try {
-            users = restTemplate.exchange(BASE_URL + "user/", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
+            users = restTemplate.exchange(BASE_URL + "users/", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
             System.out.println("-------------------------------------------");
             System.out.println("Users");
             System.out.println("ID\tName");
@@ -50,8 +50,6 @@ public class TransferService {
         catch(Exception e) {
             System.out.println("INVALID INPUT");
         }
-
-        System.out.println("Users");
     }
 
     private HttpEntity<Void> makeAuthEntity() {
