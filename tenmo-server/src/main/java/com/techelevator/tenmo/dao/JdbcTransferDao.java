@@ -23,12 +23,7 @@ public class JdbcTransferDao implements TransferDao {
                     "VALUES (2, 2, ?, ?, ?);";
 
 
-//        int transferId = transfer.getTransfer_Id();
-//        int typeId = transfer.getType_Id();
-//        int statusId = transfer.getStatus_Id();
-//        int accountFrom = transfer.getFromAccount();
-//        int accountTo = transfer.getToAccount();
-//        BigDecimal amount = transfer.getAmountToOrFrom();
+
             jdbcTemplate.update(sql, fromUser, toUser, amount);
 
             accountDao.addBalance(toUser, amount);
