@@ -27,7 +27,8 @@ public class TransferService {
         transfer.setFromAccount(currentUser.getUser().getId());
         Scanner keyboard = new Scanner(System.in);
         try {
-            users = restTemplate.exchange(BASE_URL + "users/", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
+            System.out.println("test");
+            users = restTemplate.exchange(BASE_URL + "allusers", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
             System.out.println("-------------------------------------------");
             System.out.println("Users");
             System.out.println("ID\tName");
