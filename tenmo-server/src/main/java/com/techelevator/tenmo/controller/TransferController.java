@@ -15,14 +15,8 @@ public class TransferController {
     private TransferDao transferDao;
     private UserDao userDao;
 
-    public TransferController(TransferDao transferDao, UserDao userDao) {
-        this.transferDao = transferDao;
-        this.userDao = userDao;
-    }
-
     @RequestMapping(path = "transfer/", method = RequestMethod.POST)
     public String makeTransfer(@PathVariable Transfer transfer) {
-        String result = transferDao.sendTransfer(transfer.getFromAccount(), transfer.getToAccount(),transfer.getAmountToOrFrom());
-        return result;
+        return transferDao.sendTransfer(transfer.getFromAccount(), transfer.getToAccount(),transfer.getAmountToOrFrom());
     }
 }
