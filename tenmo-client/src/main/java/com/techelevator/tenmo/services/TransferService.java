@@ -3,6 +3,7 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
+import com.techelevator.tenmo.model.UserCredentials;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,7 @@ public class TransferService {
         this.BASE_URL = url;
         this.currentUser = currentUser;
     }
+
     public void sendTEBucks() {
         User[] users;
         Transfer transfer = new Transfer();
@@ -52,7 +54,7 @@ public class TransferService {
                 }
             }
             System.out.println(transfer.getAmountToOrFrom());
-            System.out.println(restTemplate.exchange(BASE_URL + "transfers", HttpMethod.POST, makeAuthEntity(), Transfer.class).getBody());
+            System.out.println(restTemplate.exchange(BASE_URL + "transfers", HttpMethod.POST, makeTransfer(transfer), StringWrapper.class).getBody().string);
 
         }
         catch(Exception e) {
@@ -61,9 +63,18 @@ public class TransferService {
         }
     }
 
-    private HttpEntity<Void> makeAuthEntity() {
+    private HttpEntity makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(currentUser.getToken());
         return new HttpEntity<>(headers);
+    }
+
+    private HttpEntity<Transfer> makeTransfer (Transfer transfer) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(currentUser.getToken());
+        HttpEntity<Transfer> entity = new HttpEntity<>(transfer, headers);
+        return entity;
     }
 }

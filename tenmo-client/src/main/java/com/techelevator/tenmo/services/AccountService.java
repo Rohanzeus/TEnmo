@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 
 public class AccountService {
 
-    private final String BASE_URL;
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final AuthenticatedUser currentUser;
+    private String BASE_URL;
+    private RestTemplate restTemplate = new RestTemplate();
+    private AuthenticatedUser currentUser;
 
     public AccountService(String url, AuthenticatedUser currentUser) {
         this.BASE_URL = url;
