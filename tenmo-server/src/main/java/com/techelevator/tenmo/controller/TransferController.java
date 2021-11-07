@@ -1,5 +1,6 @@
 package com.techelevator.tenmo.controller;
 
+import com.techelevator.tenmo.dao.StringWrapper;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.dao.TransferDao;
 import com.techelevator.tenmo.dao.UserDao;
@@ -14,8 +15,7 @@ public class TransferController {
 
 
     @RequestMapping(path = "transfers", method = RequestMethod.POST)
-    public String makeTransfer(@RequestBody Transfer transfer) {
-        String result = transferDao.sendTransfer(transfer.getFromAccount(), transfer.getToAccount(),transfer.getAmountToOrFrom());
-        return result;
+    public StringWrapper makeTransfer(@RequestBody Transfer transfer) {
+        return transferDao.sendTransfer(transfer.getFromAccount(), transfer.getToAccount(),transfer.getAmountToOrFrom());
     }
 }

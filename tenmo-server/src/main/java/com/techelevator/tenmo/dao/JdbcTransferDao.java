@@ -2,10 +2,12 @@ package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Transfer;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 
+@Component
 public class JdbcTransferDao implements TransferDao {
     JdbcTemplate jdbcTemplate;
     AccountDao accountDao;
@@ -16,7 +18,7 @@ public class JdbcTransferDao implements TransferDao {
     }
 
     @Override
-    public String sendTransfer(int fromUser, int toUser, BigDecimal amount) {
+    public StringWrapper sendTransfer(int fromUser, int toUser, BigDecimal amount) {
 
         if (amount.compareTo(accountDao.getBalance(fromUser)) != 1) {
             String sql = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount )" +
@@ -28,9 +30,9 @@ public class JdbcTransferDao implements TransferDao {
 
             accountDao.addBalance(toUser, amount);
             accountDao.subtractBalance(fromUser, amount);
-            return "Completed";
+            return new StringWrapper("Completed");
         }
 
-        return "Failed";
+        return new StringWrapper("Failed");
     }
 }
