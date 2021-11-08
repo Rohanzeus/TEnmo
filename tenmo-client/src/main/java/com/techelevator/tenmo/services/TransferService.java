@@ -1,9 +1,6 @@
 package com.techelevator.tenmo.services;
 
-import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.User;
-import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.model.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,11 +23,11 @@ public class TransferService {
 
     public void sendTEBucks() {
         User[] users;
-        Transfer transfer = new Transfer();
+        TransferDTO transfer = new TransferDTO();
         transfer.setFromAccount(currentUser.getUser().getId());
         Scanner keyboard = new Scanner(System.in);
         try {
-            System.out.println("test");
+
             users = restTemplate.exchange(BASE_URL + "allusers", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
             System.out.println("-------------------------------------------");
             System.out.println("Users");
@@ -44,7 +41,7 @@ public class TransferService {
             System.out.println("---------");
             System.out.print("Enter ID of user you are sending to (0 to cancel): ");
             transfer.setToAccount(Integer.parseInt(keyboard.nextLine()));
-            transfer.setFromAccount (currentUser.getUser().getId());
+//            System.out.println(transfer.getToAccount());
             if(transfer.getToAccount() != 0) {
                 System.out.print("Enter amount: ");
                 try {
@@ -54,11 +51,11 @@ public class TransferService {
                 }
             }
             System.out.println(transfer.getAmountToOrFrom());
-            System.out.println(restTemplate.exchange(BASE_URL + "transfers", HttpMethod.POST, makeTransfer(transfer), StringWrapper.class).getBody().string);
+            String output = restTemplate.exchange(BASE_URL + "transfer", HttpMethod.POST, makeTransfer(transfer), String.class).getBody();
+            System.out.println(output);
 
         }
         catch(Exception e) {
-            System.out.println(e.getStackTrace());
             e.printStackTrace();
         }
     }
@@ -70,11 +67,11 @@ public class TransferService {
         return new HttpEntity<>(headers);
     }
 
-    private HttpEntity<Transfer> makeTransfer (Transfer transfer) {
+    private HttpEntity<TransferDTO> makeTransfer (TransferDTO transfer) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(currentUser.getToken());
-        HttpEntity<Transfer> entity = new HttpEntity<>(transfer, headers);
+        HttpEntity<TransferDTO> entity = new HttpEntity<>(transfer, headers);
         return entity;
     }
 }

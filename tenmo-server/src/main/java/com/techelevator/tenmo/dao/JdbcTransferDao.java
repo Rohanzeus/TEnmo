@@ -18,7 +18,7 @@ public class JdbcTransferDao implements TransferDao {
     }
 
     @Override
-    public StringWrapper sendTransfer(int fromUser, int toUser, BigDecimal amount) {
+    public String sendTransfer(int fromUser, int toUser, BigDecimal amount) {
 
         if (amount.compareTo(accountDao.getBalance(fromUser)) != 1) {
             String sql = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount )" +
@@ -30,9 +30,9 @@ public class JdbcTransferDao implements TransferDao {
 
             accountDao.addBalance(toUser, amount);
             accountDao.subtractBalance(fromUser, amount);
-            return new StringWrapper("Completed");
+            return "Completed";
         }
 
-        return new StringWrapper("Failed");
+        return "Failed";
     }
 }
