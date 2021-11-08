@@ -10,7 +10,7 @@ public class Transfer {
     private int type_Id;
     private BigDecimal amountToOrFrom;
     private String type;
-    private String transfer;
+    private String status;
     private String fromUser;
     private String toUser;
 
@@ -70,12 +70,12 @@ public class Transfer {
         this.type = type;
     }
 
-    public String getTransfer() {
-        return transfer;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTransfer(String transfer) {
-        this.transfer = transfer;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getFromUser() {
